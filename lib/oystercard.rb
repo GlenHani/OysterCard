@@ -2,10 +2,11 @@ class OysterCard
 
     MAXIMUM_BALANCE = 90
 
-    attr_accessor :balance
+    attr_accessor :balance, :touch_in
 
     def initialize (balance = 0)
       @balance = balance
+      @CardState = false 
     end
 
     def top_up(amount)
@@ -17,5 +18,19 @@ class OysterCard
       @balance -= amount
     end
 
+ 
+    def in_journey?
+      @CardState
+    end
 
+
+    def touch_in
+
+      @CardState = true
+    end 
+
+    def touch_out 
+      @CardState = false
+    end 
+    
   end
