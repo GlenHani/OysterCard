@@ -1,12 +1,13 @@
 class OysterCard
 
     MAXIMUM_BALANCE = 90
+    MINIMUM_BALANCE = 1
 
     attr_accessor :balance, :touch_in
 
     def initialize (balance = 0)
       @balance = balance
-      @CardState = false 
+      @CardState = false
     end
 
     def top_up(amount)
@@ -14,11 +15,8 @@ class OysterCard
         @balance += amount
     end
 
-    def deduct(amount)
-      @balance -= amount
-    end
 
- 
+
     def in_journey?
       @CardState
     end
@@ -27,10 +25,19 @@ class OysterCard
     def touch_in
 
       @CardState = true
-    end 
+    end
 
-    def touch_out 
+    def touch_out
+      deduct(MINIMUM_BALANCE)
       @CardState = false
-    end 
-    
+    end
+
+    private
+
+    def deduct(amount)
+      @balance -= amount
+    end
+
+
+
   end
