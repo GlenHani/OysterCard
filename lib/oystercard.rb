@@ -23,7 +23,7 @@ class OysterCard
 
 
     def touch_in
-
+      fail "Insufficient balance to touch in" if balance < MINIMUM_BALANCE
       @CardState = true
     end
 

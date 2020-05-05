@@ -9,9 +9,14 @@ describe OysterCard do
     expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
   end
 
-  it 'raises an error if the minumum balance is reached' do
+  it 'will not touch in if below minimum balance' do
     minimum_balance = OysterCard::MINIMUM_BALANCE
-    expect { subject.touch_out  }.to change{ subject.balance }.by (-OysterCard::MINIMUM_BALANCE)
+    expect{ subject.touch_in }.to raise_error "Insufficient balance to touch in"
+  end
+
+  it 'minimum charge for touch out' do
+    minimum_balance = OysterCard::MINIMUM_BALANCE
+    expect { subject.touch_out }.to change{ subject.balance }.by (-OysterCard::MINIMUM_BALANCE)
   end
 
   it 'raises an error if the maximum balance is exceeded' do
@@ -25,11 +30,13 @@ describe OysterCard do
   end
 
   it "can touch in" do
+    subject.top_up(15)
     subject.touch_in
     expect(subject).to be_in_journey
   end
 
   it "can touch out" do
+    subject.top_up(15)
     subject.touch_in
     subject.touch_out
     expect(subject).not_to be_in_journey
