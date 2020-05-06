@@ -1,15 +1,19 @@
 
 class Station
-  def initialize(name, zone)
-    @name = name
-    @zone = zone
 
-    def name
-      @name = :name
-    end
 
-    def zone
-      @zone = :zone
-    end
+
+  def initialize(value)
+    @hash = value
   end
+
+  def name
+    @hash[:name]
+  end
+
+  def zone
+    @hash[:zone]
+  end
+
+
 end
