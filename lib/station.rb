@@ -1,19 +1,11 @@
 
 class Station
 
+attr_reader :name, :zone
 
-
-  def initialize(value)
-    @hash = value
+  def initialize(name: , zone:)
+    @name = name
+    @zone = zone
   end
-
-  def name
-    @hash[:name]
-  end
-
-  def zone
-    @hash[:zone]
-  end
-
 
 end

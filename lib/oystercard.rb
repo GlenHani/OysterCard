@@ -8,8 +8,8 @@ class OysterCard
     def initialize (balance = 0)
       @balance = balance
       @CardStatus
-      @In_Station 
-      @Out_Station 
+      @In_Station
+      @Out_Station
     end
 
     def top_up(amount)
@@ -18,12 +18,12 @@ class OysterCard
     end
 
     def in_journey?
-      @CardStatus 
+      @CardStatus
     end
 
     def touch_in(station)
       fail "Insufficient balance to touch in" if balance < MINIMUM_BALANCE
-      @In_Station  = station 
+      @In_Station  = station
       @CardStatus = true
 
     end
@@ -36,7 +36,7 @@ class OysterCard
 
     def journeys
       journeys = Hash.new
-    end 
+    end
 
     private
 
