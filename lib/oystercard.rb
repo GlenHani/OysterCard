@@ -23,7 +23,6 @@ class OysterCard
 
     def touch_in(station)
       fail "Insufficient balance to touch in" if balance < MINIMUM_BALANCE
-      @In_Station  = station
       @CardStatus = true
 
     end
@@ -31,7 +30,6 @@ class OysterCard
     def touch_out(station)
       deduct(MINIMUM_BALANCE)
       @CardStatus = false
-      @Out_Station = station
     end
 
     def journeys

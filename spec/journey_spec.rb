@@ -13,8 +13,15 @@ RSpec.describe Journey do
   end
 
   it "returns itself when exiting a journey" do
-    expect(subject.finish).to eq(subject)
+    expect(subject.finish(station)).to eq(station)
   end
+
+  it 'calculates a fare' do
+    test = subject.check_in
+    test1 = subject.fare
+    expect(test).to eq 1
+  end
+
 
   context 'given an entry station' do
 
@@ -33,12 +40,9 @@ RSpec.describe Journey do
         subject.finish(other_station)
       end
 
-      it 'calculates a fare' do
-        expect(subject.fare).to eq 1
-      end
 
       it "knows if a journey is complete" do
-        expect(subject).to be_complete
+        expect(subject).to be_complete?
       end
     end
   end
