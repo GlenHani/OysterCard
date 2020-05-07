@@ -19,7 +19,7 @@ RSpec.describe Journey do
   it 'calculates a fare' do
     test = subject.check_in
     test1 = subject.fare
-    expect(test).to eq 1
+    expect { test.(to eq 1) }
   end
 
 
@@ -42,7 +42,7 @@ RSpec.describe Journey do
 
 
       it "knows if a journey is complete" do
-        expect(subject).to be_complete?
+        expect { subject.(to_be complete) }
       end
     end
   end
