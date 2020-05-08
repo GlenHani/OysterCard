@@ -1,13 +1,16 @@
 require 'station'
 
 RSpec.describe Station do
-  subject {described_class.new(name: "Old Street", zone: 1)}
 
-  it 'knows its name' do
-    expect(subject.name).to eq("Old Street")
+  let(:station) { Station.new("Kings Cross", 1) }
+
+  it "Station has a name" do
+    expect(station.name).not_to be_empty
   end
 
-  it 'knows its zone' do
-    expect(subject.zone).to eq(1)
+  it "Station has a zone" do
+    expect(station.zone).to eq 1
   end
+
 end
+

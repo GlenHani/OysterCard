@@ -1,45 +1,60 @@
-class OysterCard
+class Oystercard
+  attr_reader :balance, :journey_log
 
-    MAXIMUM_BALANCE = 90
-    MINIMUM_BALANCE = 1
+  DEFAULT_BALANCE = 0
+  MINIMUM_FARE = 1
+  MAXIMUM_BALANCE = 90
+  PENALTY_FARE = 6
 
-    attr_accessor :balance, :Station
-
-    def initialize (balance = 0)
-      @balance = balance
-      @CardStatus
-      @In_Station
-      @Out_Station
-    end
-
-    def top_up(amount)
-        fail 'Maximum balance of 90 exceeded' if amount + balance > MAXIMUM_BALANCE
-        @balance += amount
-    end
-
-    def in_journey?
-      @CardStatus
-    end
-
-    def touch_in(station)
-      fail "Insufficient balance to touch in" if balance < MINIMUM_BALANCE
-      @CardStatus = true
-
-    end
-
-    def touch_out(station)
-      deduct(MINIMUM_BALANCE)
-      @CardStatus = false
-    end
-
-    def journeys
-      journeys = Hash.new
-    end
-
-    private
-
-    def deduct(amount)
-      @balance -= amount
-    end
-
+  def initialize(balance = DEFAULT_BALANCE)
+    @balance = balance
+    @journey = Journey.new
+    @journey_log = JourneyLog.new
   end
+
+  def top_up(amount)
+    raise 'Oystercard has reached the limit' if exceed?(amount)
+    add(amount)
+  end
+
+  def touch_in(station = nil)
+    raise "Sorry insufficient funds available" if insufficient_funds?
+    touch_in_penalty?
+    @journey_log.begin_journey(station)
+  end
+
+  def touch_out(station = nil)
+    penalty_or_fare?
+    @journey_log.finish_journey(station)
+  end
+
+  private
+
+  def exceed?(value)
+    @balance + value > MAXIMUM_BALANCE
+  end
+
+  def insufficient_funds?
+    @balance < MINIMUM_FARE
+  end
+
+  def deduct(travel)
+    @balance -= travel
+  end
+
+  def add(amount)
+    @balance += amount
+  end
+
+  def in_journey?
+    @journey_log.in_journey
+  end
+
+  def touch_in_penalty?
+    deduct(PENALTY_FARE) if in_journey?
+  end
+
+  def penalty_or_fare?
+    in_journey? ? deduct(MINIMUM_FARE) : deduct(PENALTY_FARE)
+  end
+end

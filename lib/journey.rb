@@ -1,46 +1,36 @@
-require 'station'
-require 'oystercard'
-
 class Journey
+  attr_reader :journey, :entry_station, :exit_station
 
-    PENALTY_FARE = 6
+  def initialize
+    @entry_station = Station.new
+    @exit_station = Station.new
+    @journey = Array.new
+  end
 
-    def initialize(entry_station: station)
-        @amount = PENALTY_FARE
-        @is_complete = false
-        @entry_station = entry_station
-        @station
+  def current_journey(entry_station, exit_station)
+    start_journey(entry_station)
+    end_journey(exit_station)
+    @journey = add_journey
+    reset_journey
+  end
 
+  def start_journey(entry_station)
+    @entry_station = entry_station
+  end
 
-    end
+  def end_journey(exit_station)
+    @exit_station = exit_station
+  end
 
-    def complete?
-      !!@is_complete
-    end
+  def reset_journey
+    @entry_station = nil  
+    @exit_station = nil 
+  end
 
-    def fare
-      if @is_complete == true
-        @amount = 1
-      else
-        @amount
-      end
+  private
 
-    end
-
-    def finish(exit_station)
-      @station = exit_station
-    end
-
-    def entry_station
-      @entry_station
-    end
-
-    def check_in
-      @is_complete = true
-    end
-
-
-
-
+  def add_journey
+    [{ @entry_station => @exit_station }]
+  end
 
 end
